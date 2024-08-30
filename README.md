@@ -1,5 +1,5 @@
 # GUIA INSTAL·LACIÓ
-	En aquesta secció, es proporcionarà una guia detallada per posar en marxa per primera vegada l'aplicació en un ordinador en un ordinador amb el sistema operatiu Windows 10. Aquesta guia parteix de la base que l'usuari ja té instal·lat Visual Studio Code i ha descarregat la carpeta completa del projecte.
+## A continuació es proporcionarà una guia detallada per posar en marxa per primera vegada l'aplicació en un ordinador en un ordinador amb el sistema operatiu Windows 10. Aquesta guia parteix de la base que l'usuari ja té instal·lat Visual Studio Code i ha descarregat la carpeta completa del projecte.
 1.	Anar a la web oficial per a descarregar Node.js (https://nodejs.org/en).
    
  ![image](https://github.com/user-attachments/assets/78f64fd2-5b77-4023-9b25-fb42707c0a76)
