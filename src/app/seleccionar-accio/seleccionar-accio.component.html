@@ -1,0 +1,18 @@
+<button class="boto-logout" (click)="logout()">Tancar sessió</button>
+<div *ngIf="rol === 'professor' || rol === 'admin'" class="container">
+  <div class="container">
+    <h1>Quina acció vols realitzar?</h1>
+    <div class="botons-seleccio">
+      <button (click)="navigateTo('musica')">Llista cançons</button>
+      <button (click)="navigateTo('pujar')">Pujar cançons</button>
+      <button (click)="navigateTo('entrenaments')">Entrenaments</button>
+      <button (click)="navigateTo('crear')">Crear Entrenament</button>
+      
+    </div>
+  </div>
+</div>
+<div *ngIf="rol === 'alumne' || rol === ''" class="containerError">
+  <div class="missatgeError">
+    ERROR: No tens permisos per accedir a aquesta pàgina.
+  </div>
+</div>

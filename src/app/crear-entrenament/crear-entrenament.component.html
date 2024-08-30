@@ -1,0 +1,72 @@
+<button class="boto-logout" (click)="logout()">Tancar sessió</button>
+<div *ngIf="rol === 'professor' || rol === 'admin'" class="container">
+    <div class="header">
+        <button class="boto" (click)="navigateTo('entrenaments')">Entrenaments</button>
+        <h1>Crear Entrenament</h1>
+    </div>
+    <div *ngIf="missatgeError" class="missatge-error">{{ missatgeError }}</div>
+    <div class="form-group">
+        <label for="nom">Nom:</label>
+        <input type="text" id="nom" [(ngModel)]="nom">
+    </div>
+    <div class="form-group">
+        <label for="duracio">Duració Total (mins):</label>
+        <input type="number" id="duracio" [(ngModel)]="duracioEntrenament" disabled>
+    </div>
+    <div *ngFor="let activitat of activitats; let i = index" class="activitat-container">
+        <h3>Activitat {{ i + 1 }}</h3>
+        <div class="form-group">
+            <label for="temps-{{i}}">Temps (mins):</label>
+            <input type="number" id="temps-{{i}}" [(ngModel)]="activitat.temps" (input)="actualitzarDuracio()">
+        </div>
+        <div class="form-group">
+            <label for="intensitat-{{i}}">Intensitat:</label>
+            <select id="intensitat-{{i}}" [(ngModel)]="activitat.intensitat">
+                <option value="" selected>Seleccioneu intensitat</option>
+                <option value="Baix">Baix</option>
+                <option value="Mig">Mig</option>
+                <option value="Alt">Alt</option>
+            </select>
+        </div>
+        <button class="eliminar" (click)="eliminarActivitat(i)">Eliminar Activitat</button>
+    </div>
+    <div class="buttons">
+        <button class="afegir" (click)="afegirActivitat()">Afegir Activitat</button>
+        <button (click)="plenarCancons()">Crear Entrenament</button>
+    </div>
+
+    <div class="container" *ngIf="revisat">
+        <h1>Revisar Cançons Seleccionades</h1>
+        <div *ngFor="let aS of activitatSeleccionada; let i = index" class="activitat-container">
+            <h3>Activitat {{ i + 1 }}: {{ aS.activitat.intensitat }}</h3>
+            <p>Temps: {{ aS.activitat.temps }} mins</p>
+            <ul>
+                <li *ngFor="let canco of aS.cancons; let j = index">{{ canco.titol }} ({{ convertirMinuts(canco.duracio) }} mins)
+                    <button type="button" class="editar" (click)="editarCanco(i, j)">Editar Cançó</button>
+                    <button type="button" class="eliminar" (click)="eliminarCanco(i, j)">Eliminar Cançó</button>
+                </li>
+            </ul>
+            <button type="button" class="afegir" (click)="afegirCanco(i)">Afegir Cançó</button>
+        </div>
+        <div class="buttons">
+            <button type="button" (click)="confirmarCancons()">Confirmar</button>
+        </div>
+    </div>
+    
+    <div *ngIf="mostrarSelectorCancons" class="modal">
+        <div class="modal-content">
+            <h2>Seleccionar nova cançó:</h2>
+            <ul>
+                <li *ngFor="let canco of cancoEditar.cancons" (click)="seleccionarNovaCanco(canco)">
+                    {{ canco.titol }} ({{ convertirMinuts(canco.duracio) }} mins)
+                </li>
+            </ul>
+            <button type="button" (click)="tancarSelectorCancons()">Cancelar</button>
+        </div>
+    </div>
+</div>
+<div *ngIf="rol === 'alumne' || rol === ''" class="containerError">
+    <div class="missatgeError">
+      ERROR: No tens permisos per accedir a aquesta pàgina.
+    </div>
+</div>

@@ -1,0 +1,82 @@
+<div class="container">
+  <button *ngIf="rol === 'professor' || rol === 'admin'" class="boto" (click)="navigateTo('accio')">Inici</button>
+  <button class="boto" (click)="logout()">Tancar sessió</button>
+  <div class="header">
+    <h1>Entrenaments</h1>
+    <button *ngIf="rol === 'professor' || rol === 'admin'" class="boto" (click)="navigateTo('crear')">Crear Entrenament</button>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nom</th>
+        <th>Duració Total</th>
+        <th>Accions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let entrenament of entrenaments">
+        <td>{{ entrenament.id }}</td>
+        <td>{{ entrenament.nom }}</td>
+        <td>{{ entrenament.duracio }}</td>
+        <td>
+          <button class="boto" (click)="mostrarEntrenament(entrenament)">Mostrar</button>
+          <button class="boto" (click)="reproduirEntrenament(entrenament)">Reproduir</button>
+          <button *ngIf="rol === 'professor' || rol === 'admin'" class="boto" (click)="mostrarAlumnes(entrenament)">Assignar</button>
+          <button *ngIf="rol === 'professor' || rol === 'admin'" class="boto" (click)="mostrarAssignats(entrenament)">Desassignar</button>
+          <button *ngIf="rol === 'professor' || rol === 'admin'" class="boto" (click)="eliminarEntrenament(entrenament.id)">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="mostrarAssignar">
+    <h3>Assignar entrenament a un alumne</h3>
+    <table>
+      <tr *ngFor="let alumne of alumnes">
+        <td>{{ alumne.nom }}</td>
+        <td><button class="boto" (click)="assignarEntrenament(alumne.id)">Assignar</button></td>
+      </tr>
+    </table>
+  </div>
+
+  <div *ngIf="mostrarDesassignar">
+    <h3>Desassignar entrenament a un alumne</h3>
+    <table>
+      <tr *ngFor="let alumne of alumnesAssignats">
+        <td>{{ alumne.nom }}</td>
+        <td><button class="boto" (click)="desassignarEntrenament(alumne.id)">Desassignar</button></td>
+      </tr>
+    </table>
+  </div>
+
+  <div *ngIf="selectedEntrenament">
+    <h2>Detalls de l'entrenament seleccionat:</h2>
+    <p><strong>Nom:</strong> {{ selectedEntrenament.nom }}</p>
+    <p><strong>Duració Total:</strong> {{ selectedEntrenament.duracio }} mins</p>
+  </div>
+
+  <div *ngIf="entrenamentDetails.length > 0">
+    <h2>Cançons per l'entrenament seleccionat:</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Temps</th>
+          <th>Intensitat</th>
+          <th>Cançons</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let detail of entrenamentDetails">
+          <td>{{ detail.idactivitat }}</td>
+          <td>{{ detail.temps }}</td>
+          <td>{{ detail.intensitat }}</td>
+          <td>{{ detail.cancons }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div id="player"></div>
+</div>

@@ -1,0 +1,59 @@
+<button class="boto-logout" (click)="logout()">Tancar sessió</button>
+<div *ngIf="rol === 'professor' || rol === 'admin'" class="container">
+    <button class="boto" (click)="navigateTo('accio')">Inici</button>
+    <div class="header">
+        <h1>Llista cançons</h1>
+        <button class="boto" (click)="navigateTo('pujar')">Pujar cançó</button>
+      </div>
+    <div class="buscar">
+        <input type="text" id="busqueda" placeholder="Cerca cançó" (input)="filtrarLlista()">
+        <button class="boto" (click)="filtrarLlista()">Cerca</button>
+        <button class="boto" (click)="menuFiltres()">Filtres</button>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Títol</th>
+                <th>Duracio(min)</th>
+                <th>BPM</th>
+                <th>Intensitat</th>
+                <th>Artista</th>
+                <th>Link</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let canco of llistaCancons">
+                <td>{{ canco.titol }}</td>
+                <td>{{ convertirMinuts(canco.duracio) }}</td>
+                <td>{{ canco.bpm }}</td>
+                <td>{{ canco.intensitat }}</td>
+                <td>{{ canco.artista }}</td>
+                <td>{{ canco.link }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="menu-filtres" [class.obrir]="obrirMenu">
+        <button class="boto-X" (click)="menuFiltres()">X</button>
+        <h2>Filtres</h2>
+        <div class="filtres">
+            <h3>Intensitat</h3>
+            <p><label>Alt<input type="checkbox" [(ngModel)]="intensitatAlta"></label></p>
+            <p><label>Mig<input type="checkbox" [(ngModel)]="intensitatMitja"></label></p>
+            <p><label>Baix<input type="checkbox" [(ngModel)]="intensitatBaixa"></label></p>
+        </div>
+        <div class="filtres">
+            <h3>BPM</h3>
+            <input type="range" id="bpmMin" name="bpmMin" min="0" max="200" [(ngModel)]="rangBPM[0]">
+            <input type="range" id="bpmMax" name="bpmMax" min="0" max="200" [(ngModel)]="rangBPM[1]">
+            <p>BPM Range: {{rangBPM[0]}} - {{rangBPM[1]}}</p>
+        </div>
+        <button class="boto-apl-net boto" (click)="aplicarFiltres()">Aplicar Filtres</button>
+        <button class="boto-apl-net boto" (click)="netejarFiltres()">Netejar Filtres</button>
+    </div>
+</div>
+<div *ngIf="rol === 'alumne' || rol === ''" class="containerError">
+    <div class="missatgeError">
+      ERROR: No tens permisos per accedir a aquesta pàgina.
+    </div>
+</div>

@@ -1,0 +1,35 @@
+<button class="boto-logout" (click)="logout()">Tancar sessió</button>
+<div *ngIf="rol === 'professor' || rol === 'admin'" class="container">
+  <button class="boto-inici" (click)="navigateTo('musica')">Llista cançons</button>
+  <div class="upload">
+    <input id="youtube-link" type="text" placeholder="Link Youtube" [(ngModel)]="youtubeLink" [disabled]="bloquejarLink">
+    <button class="boto" (click)="buscarCanco()">Cercar</button>
+  </div>
+
+  <div *ngIf="isLoading" class="loading-message">
+    <p>Espera mentre es descarrega i s'analitza la canço...</p>
+  </div>
+
+  <div *ngIf="missatgeError" class="error-message">
+    <p>{{ missatgeError }}</p>
+  </div>
+  <div *ngIf="mostrarFormulari" class="formulario">
+    <input type="text" placeholder="Títol" [(ngModel)]="titol">
+    <input type="text" placeholder="Artista" [(ngModel)]="artista">
+    <p>Duració: {{ convertirMinuts(duracio) }} minuts</p>
+    <p>BPM: {{ bpm }}</p>
+    <div>
+      <button class="boto" (click)="pujarCanco()">Pujar cançó</button>
+      <button class="boto" (click)="cancelarAnalisi()">Cancelar</button>
+    </div>
+    <p>Tingues en compte que els rangs de BPM per a determinar el ritme seran els següents:</p>
+    <p>Ritme "Baix": menys de 95 BPM</p>
+    <p>Ritme "Mig": entre 95 i 130 BPM</p>
+    <p>Ritme "Alt": mes de 130 BPM</p>
+  </div>
+</div>
+<div *ngIf="rol === 'alumne' || rol === ''" class="containerError">
+  <div class="missatgeError">
+    ERROR: No tens permisos per accedir a aquesta pàgina.
+  </div>
+</div>
